@@ -1,0 +1,7 @@
+line p1 10 10 color 255 0 0 p2 20 20 color 0 0 255
+circle p 40 40 color 0 0 0 r 10 color 255 255 255
+triangle v1 100 100 color 255 0 0 v2 200 100 color 0 255 0 v3 200 0 color 0 0 255
+polygon v 300 300 color 0 0 0 v 350 300 color 63 63 63 v 350 350 color 127 127 127 v 300 350 color 255 255 255
+rectangle p 100 100 d 100 100 color 255 0 0
+rectangle p 100 400 d 100 100 color 0 200 200
+

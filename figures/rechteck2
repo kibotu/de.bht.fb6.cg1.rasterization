@@ -1,0 +1,7 @@
+rectangle p 100 100 d 100 100 color 0 125 125
+rectangle p 300 100 d 100 100 color 0 125 125
+rectangle p 500 100 d 100 100 color 0 125 125
+
+rectangle p 100 300 d 100 100 color 0 125 125
+rectangle p 300 300 d 100 100 color 0 125 125
+rectangle p 500 300 d 100 100 color 0 125 125

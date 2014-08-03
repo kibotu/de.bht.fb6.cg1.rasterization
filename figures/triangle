@@ -1,0 +1,2 @@
+triangle v1 200 200 color 0 0 0 v2 100 200 color 63 63 63 v3 100 100 color 127 127 127
+line p1 10 300 color 255 100 100 p2 400 290 color 0 0 255

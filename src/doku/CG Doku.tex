@@ -1,0 +1,144 @@
+%% Based on a TeXnicCenter-Template by Gyorgy SZEIDL.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------
+%
+\documentclass{report}%
+%
+%----------------------------------------------------------
+% This is a sample document for the standard LaTeX Report Class
+% Class options
+%       --  Body text point size:
+%                        10pt (default), 11pt, 12pt
+%       --  Paper size:  letterpaper (8.5x11 inch, default)
+%                        a4paper, a5paper, b5paper,
+%                       legalpaper, executivepaper
+%       --  Orientation (portrait is the default):
+%                       landscape
+%       --  Printside:  oneside (default), twoside
+%       --  Quality:    final (default), draft
+%       --  Title page: titlepage, notitlepage
+%       --  Columns:    onecolumn (default), twocolumn
+%       --  Start chapter on left:
+%                       openright(no), openany (default)
+%       --  Equation numbering (equation numbers on right is the default)
+%                       leqno
+%       --  Displayed equations (centered is the default)
+%                       fleqn (flush left)
+%       --  Open bibliography style (closed bibliography is the default)
+%                       openbib
+% For instance the command
+%          \documentclass[a4paper,12p,leqno]{report}
+% ensures that the paper size is a4, fonts are typeset at the size 12p
+% and the equation numbers are on the left side.
+%
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathptmx}
+\usepackage{times}
+\usepackage[latin1]{inputenc}
+\usepackage{mathcomp}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{cancel}
+\usepackage{graphicx}
+%----------------------------------------------------------
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+%----------------------------------------------------------
+\begin{document}
+
+\title{Dokumentation Computergrafik 1 - Aufgabe 1}
+\author{Jan Rabe 766212}
+\date{9.11.2010}
+\maketitle
+\tableofcontents
+
+\part{Aufgabenstellung}
+
+\chapter{Pflichtaufgaben}
+
+Implementieren Sie zunächst die Rasterisierung von Linie, gefülltem Kreis, gefülltem Dreieck und
+gefülltem Polygon in einer einheitlichen Farbe Ihrer Wahl (außer Schwarz oder dunkles Grau). Implementieren
+Sie für das Polygon sowohl eine Rasterisierung als ganzes, als auch eine Triangulierung.
+Bei der Triangulierung ist es ausreichend, wenn Sie konvexe Polygone zerlegen können.
+Erstellen Sie anschließend einen zweiten Rasterisierer, der lediglich die Ränder der Primitiven in weißer
+Farbe zeichnet.
+Erweitern Sie nun den ersten Rasterisierer und verwenden Sie die aus der Datei geladenen Farben
+zur Füllung der Primitiven. Hierbei muss eine Interpolation der Farben zwischen den Eckpunkten
+stattfinden.
+
+\chapter{Ausgefüllte Flächen}
+
+Im Rasterzier landen die Koordinaten und Farbwerte als 'Figure'. Dort wird jeweils getestet, ob die Figure ein Rechteck, eine Linie, ein Kreis, ein Dreieck oder ein Polygon ist. Falls es sich um eine Linie handelt, wird diese in das Objekt Line gecasted. Daraufhin füllt die Linie den FrameBuffer. Der FrameBuffer ist ein zwei-Dimensionaler Color Array, welcher am Ende auf ein Canvaz abgebildet wird. Das heißt, die Linie zeichnet sich selbst. So auch analog die anderen Flächen.\\ \\
+Um auf Sonderfälle einzugehen, habe ich unterschiedliche Test-Dateien mit Koordinaten zu den einzelnen Flächen angelegt.
+
+\section{Rechteck}
+Die funktionalität war bereits gegeben.
+
+\section{Linie}
+Anfangs habe ich die Linie mithilfe der Liniengleichung gezeichnet, jedoch haben lediglich zwei Fälle funktioniert. Nämlich von links nach rechts auf Horizontaler Richtung und von oben Links nach unten Rechts in einem 45° Winkel. Daraufhin habe ich etwas rechechiert und bin auf den Bresenham Algorythmus gestoßen. (http://www.cs.unc.edu/~mcmillan/comp136/Lecture6/Lines.html) Dieser geht auch elegant auf alle Möglichen Sonderfälle ein.
+
+\section{Kreis}
+Der Algorythmus zeichnet Zeile für Zeile, wobei jeder Punkt überprüft wird, ob er innerhalb des Kreises liegt. Wenn ja wird der FrameBuffer mit dem Farbwert des Kreises gefüllt.
+
+\section{Dreieck}
+Anfangs wird der minimale und maximale x-/y-Wert berechnet. Damit hat man das Grenz-Rechteck in welchem sich das Dreieck befindet. Dazu berechnet man Alpha, Beta und Gamma, welche zusammen 1 ergeben. Alpha, Beta und Gamma berechnet man mit Hilfe der Liniengleichung. Nun schaut man nur noch ob, Alpha, Beta und Gamma jeweils im Bereich zwischen 0 und 1 liegen. Wenn ja, liegt der Punkt im Dreieck und wird gezeichnet.
+
+\section{Polygon}
+Es gibt die Methode scanFill() für den Scan-Fill Algorythmus und fillConvex() für den Triangulierungs Algyrthmus.
+
+\subsection{Scan-Fill}
+Überprüft, ob ein Punkt im Polygon liegt, mit Hilfe des pointInPolygon-Algorythmus. (http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html)
+
+\subsection{Triangulation}
+Die Idee des Algorythmus von Kong (http://www.sunshine2k.de/stuff/Java/Polygon/Kong/Kong.html) ist es die nach außenstehenden Ecken (Ears) abzuschneiden. Diese Ecken werden aus der Liste der Polygonknoten entfernt und als Dreieck in die Dreick-Liste hinzugefügt. Der Kong Algorythmus wird im Konstruktor ausgefüht und muss daher nur einmal beim erstellen ausgeführt werden.
+
+\chapter{Umrandung der Flächen}
+Um die Umrandungen zu testen, wurde die Klasse OutlineRasterizer erstellt, die von den Figuren die outline()-Methode anstelle der fill()-Methode aufruft.
+
+\section{Rechteck}
+Man nehme alle Eckpunkte und verbindet diese durch Linien in vorgegebener Reihenfolge.
+
+\section{Linie}
+Bei der Linie kommt nichts hinzu.
+
+\section{Kreis}
+Hier habe ich einfach eine weitere Abfrage eingebaut, welche überprüft, ob (-Radius * Math.PI) <= der Liniengleichung liegt. Optimierungsbedarf besteht.
+
+\section{Dreieck}
+Analog zum Viereck.
+
+\section{Polygon}
+Analog zum Viereck.
+
+\chapter{Vorschläge zur Erweiterung}
+
+\section{Suchen Sie nach optimierten Algorithmen und implementieren Sie diese.}
+Die Linie funktioniert nun interpoliert in alle Richtungen, dank des Jack Bresenham Line Algorythmus.
+\section{Implementieren Sie Antialiasing.}
+Aus Zeitmangel, habe ich dies nicht mehr geschafft.
+\section{Erweitern Sie die Triangulierung so, dass Sie beliebige Polygone zerlegen können.}
+Mit Hilfe des Kong-Algorythmus, können nun konkave Polygone rasterisiert werden. Jedoch Polygone, die sich überschneiden und somit Artefakte bilden, oder Polygone mit Löchern, funktionieren damit jedoch noch nicht. \\
+
+\end{document}

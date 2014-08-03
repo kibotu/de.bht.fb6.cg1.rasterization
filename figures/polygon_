@@ -1,0 +1,3 @@
+polygon v 300 300 color 0 0 0 v 350 300 color 63 63 63 v 370 330 color 255 255 255 v 350 350 color 127 127 127 v 300 350 color 255 255 255
+polygon v 500 500 color 0 0 0 v 550 500 color 63 63 63 v 530 530 color 255 255 255 v 550 550 color 127 127 127 v 500 550 color 255 255 255
+polygon v 100 100 color 0 0 0 v 150 250 color 0 0 0 v 200 100 color 0 0 0 v 150 300 color 0 0 0
